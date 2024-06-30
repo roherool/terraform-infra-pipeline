@@ -1,0 +1,20 @@
+name: "DEV DEPLOY"
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform.yml
+    with:
+      environment: dev
+      aws-assume-role-arn: "arn:aws:iam::458979456676:role/github-actions-roherool-pipeline"
+      aws-region: "us-east-1"
+      aws-statefile-s3-bucket: "roherool-us-east-1-terraform-statefile"
+      aws-lock-dynamodb-table: "roherool-us-east-1-terraform-lock"
